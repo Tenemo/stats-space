@@ -8,3 +8,5 @@
 
 -   deployment diagrams
 -   docker
+-   favicon
+-   sentry
