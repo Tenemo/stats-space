@@ -1,19 +1,32 @@
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { createBrowserHistory } from 'history';
 import {
+    TypedUseSelectorHook,
+    useDispatch as useReduxDispatch,
+    useSelector as useReduxSelector,
+} from 'react-redux';
+import {
     Store,
     legacy_createStore, // eslint-disable-line camelcase
     applyMiddleware,
     compose,
     combineReducers,
+    AnyAction,
 } from 'redux';
 import { createReduxHistoryContext } from 'redux-first-history';
 import { createLogger } from 'redux-logger';
-import thunk from 'redux-thunk';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 
 import { BUILD_TYPE } from 'constants/appConstants';
 import { appReducer, initialAppState } from 'store/app/appReducer';
 import { RootState } from 'store/types';
+
+const PERSIST_CONFIG = {
+    key: 'root',
+    storage,
+};
 
 export const initialState = { app: initialAppState };
 
@@ -21,10 +34,14 @@ const { createReduxHistory, routerMiddleware, routerReducer } =
     createReduxHistoryContext({
         history: createBrowserHistory(),
     });
-const rootReducer = combineReducers({
-    router: routerReducer,
-    app: appReducer,
-});
+
+export const rootReducer = persistReducer(
+    PERSIST_CONFIG,
+    combineReducers({
+        router: routerReducer,
+        app: appReducer,
+    }),
+);
 
 const logger = createLogger({
     diff: true,
@@ -51,3 +68,8 @@ const configureStore =
 
 export const store = configureStore();
 export const history = createReduxHistory(store);
+export const persistor = persistStore(store);
+
+export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>;
+export const useDispatch: () => AppDispatch = useReduxDispatch;
+export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;

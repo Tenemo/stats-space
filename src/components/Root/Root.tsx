@@ -1,10 +1,11 @@
+import { CircularProgress } from '@mui/material';
 import React, { ReactElement, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
-import { HistoryRouter as Router } from 'redux-first-history/rr6';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import App from 'components/App';
-import { store, history } from 'store/configureStore';
+import { store, persistor } from 'store';
 
 import 'styles/global.scss';
 
@@ -23,11 +24,11 @@ export const Root = (): ReactElement => {
 
     return (
         <Provider store={store}>
-            <HelmetProvider>
-                <Router history={history}>
+            <PersistGate loading={<CircularProgress />} persistor={persistor}>
+                <HelmetProvider>
                     <App />
-                </Router>
-            </HelmetProvider>
+                </HelmetProvider>
+            </PersistGate>
         </Provider>
     );
 };

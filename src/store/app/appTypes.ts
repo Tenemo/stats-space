@@ -6,6 +6,8 @@ export const APP_EXAMPLE_REQUEST = 'APP_EXAMPLE_REQUEST';
 export const APP_EXAMPLE_FAILURE = 'APP_EXAMPLE_FAILURE';
 export const APP_EXAMPLE_SUCCESS = 'APP_EXAMPLE_SUCCESS';
 
+export type AppTheme = 'light' | 'dark';
+
 export type ExampleRequest = {
     id: number;
 };
@@ -16,7 +18,7 @@ export type ExampleResponse = {
 };
 
 export type AppState = {
-    theme: string;
+    theme: AppTheme;
     example: {
         isLoading: boolean;
         error: UnknownError | null;

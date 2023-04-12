@@ -1,19 +1,23 @@
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import React, { Component, ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { connect } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import { HistoryRouter as Router } from 'redux-first-history/rr6';
+
 import 'normalize.css';
+import styles from './app.scss';
 
 import 'fonts/RobotoMono-Regular.woff2';
 import 'fonts/RobotoMono-Regular.woff';
 
-import styles from './app.scss';
-
 import Header from 'components/Header';
 import HomePage from 'components/HomePage';
 import NotFound from 'components/NotFound';
+import { history } from 'store';
 import { getAppTheme } from 'store/app/appSelectors';
 import { RootState } from 'store/types';
+import { darkTheme, lightTheme } from 'styles/theme';
 
 type State = {
     hasError: boolean;
@@ -48,28 +52,35 @@ export class App extends Component<Props> {
             appTheme === 'dark' ? 'theme-dark' : 'theme-light'
         }`;
         return (
-            <div className={classNames}>
-                <Helmet>
-                    <title>stats.space</title>
-                </Helmet>
-                {hasError ? (
-                    <div>
-                        The application has crashed due to a rendering error.{' '}
-                        <div className={styles.errorInfo}>
-                            {JSON.stringify(error, null, 4)}
-                            {JSON.stringify(errorInformation, null, 4)}
-                        </div>
+            <ThemeProvider theme={appTheme === 'dark' ? darkTheme : lightTheme}>
+                <CssBaseline enableColorScheme />
+                <Router history={history}>
+                    <div className={classNames}>
+                        <Helmet>
+                            <title>stats.space</title>
+                        </Helmet>
+
+                        {hasError ? (
+                            <div>
+                                The application has crashed due to a rendering
+                                error.{' '}
+                                <div className={styles.errorInfo}>
+                                    {JSON.stringify(error, null, 4)}
+                                    {JSON.stringify(errorInformation, null, 4)}
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                <Header />
+                                <Routes>
+                                    <Route element={<HomePage />} path="/" />
+                                    <Route element={<NotFound />} path="*" />
+                                </Routes>
+                            </>
+                        )}
                     </div>
-                ) : (
-                    <>
-                        <Header />
-                        <Routes>
-                            <Route element={<HomePage />} path="/" />
-                            <Route element={<NotFound />} path="*" />
-                        </Routes>
-                    </>
-                )}
-            </div>
+                </Router>
+            </ThemeProvider>
         );
     }
 }
