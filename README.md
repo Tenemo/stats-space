@@ -2,9 +2,13 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/82bca42e-6599-4cbe-8b4f-cf45d7db1b3a/deploy-status)](https://app.netlify.com/sites/stats-space/deploys)
 
-Front-end repository for [stats.space](https://stats.space).
+Front-end repository for [stats.space](https://stats.space)
 
 Back-end repository: [github.com/Tenemo/stats-space-backend](https://github.com/Tenemo/stats-space-backend)
+
+### Caching
+
+Since the data used doesn't get stale quickly, the front-end application caches the full dataset once it is loaded, working offline after the initial connection.
 
 ### Local environment setup
 
@@ -23,7 +27,7 @@ Back-end repository: [github.com/Tenemo/stats-space-backend](https://github.com/
 4. `docker compose up -d`
 5. `npm install`
 6. `npm run nodemon`
-   Back-end will run on port 4000 by default.
+   Back-end will run on port 4000 by default. Postman collection [available here](https://github.com/Tenemo/stats-space-backend/blob/master/postman/stats-space.postman_collection.json).
 
 ### Stack
 
@@ -38,7 +42,7 @@ Back-end repository: [github.com/Tenemo/stats-space-backend](https://github.com/
 -   Front-end hosting + CDN: [Netlify](https://www.netlify.com/)
 -   Back-end hosting: [Heroku](https://heroku.com)
 -   Database: [Heroku Postgres](https://www.heroku.com/postgres)
--   CI/CD: [GitHub](https://github.com/) integrations with [Heroku](https://heroku.com) and [Netlify](https://www.netlify.com/), automatic `master` branch deployments to production environments for both repositories after multiple checks. [Husky](https://typicode.github.io/husky/#/) prevents committing code that doesn't meet the below checks and these are also run before every deployment with any errors aborting the deployment:
+-   CI/CD: [GitHub](https://github.com/) integrations with [Heroku](https://heroku.com) and [Netlify](https://www.netlify.com/), automatic `master` branch deployments to production environments for both repositories after automatic code quality checks and tests. [Husky](https://typicode.github.io/husky/#/) prevents committing code that doesn't meet the below checks, too. These are run before every deployment with any errors aborting the deployment:
     1. Code static analysis passes with no errors, including enforcing automatic formatting. Additionally, CSS/SCSS static analysis on front-end.
     2. Typechecking passes with no errors.
     3. Tests pass with no errors.
@@ -52,6 +56,4 @@ Back-end repository: [github.com/Tenemo/stats-space-backend](https://github.com/
 
 ### To-do (maybe):
 
--   deployment diagrams
--   docker
 -   favicon

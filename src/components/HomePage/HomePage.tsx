@@ -1,11 +1,40 @@
-import { Box } from '@mui/material';
-import React, { ReactElement } from 'react';
-
-import './homePage.scss';
+import { Box, useTheme, CircularProgress } from '@mui/material';
+import React, { ReactElement, useEffect } from 'react';
 
 import Background from './Background';
+import Chart from './Chart';
+
+import Error from 'components/Error';
+import { useSelector, useDispatch } from 'store';
+import { fetchLaunches, fetchGDP } from 'store/stats/statsActions';
+import { getStatsLaunches, getStatsGDP } from 'store/stats/statsSelectors';
+import './homePage.scss';
 
 export const HomePage = (): ReactElement => {
+    const theme = useTheme();
+    const dispatch = useDispatch();
+    const {
+        response: launchesResponse,
+        error: launchesError,
+        isLoading: isLaunchesLoading,
+    } = useSelector(getStatsLaunches);
+    const {
+        response: GDPResponse,
+        error: GDPError,
+        isLoading: isGDPLoading,
+    } = useSelector(getStatsGDP);
+
+    const isLoading = isLaunchesLoading || isGDPLoading;
+
+    useEffect(() => {
+        if (!launchesResponse) {
+            void dispatch(fetchLaunches());
+        }
+        if (!GDPResponse) {
+            void dispatch(fetchGDP());
+        }
+    }, [dispatch, launchesResponse, GDPResponse]);
+
     return (
         <Box
             component="main"
@@ -13,16 +42,42 @@ export const HomePage = (): ReactElement => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'flex-start',
                 zIndex: 0,
+                width: '100%',
+                height: '100%',
             }}
         >
             <Background />
             <Box
                 sx={{
                     zIndex: 1,
+                    backgroundColor: theme.palette.background.default,
+                    mt: 10,
+                    width: '90%',
+                    height: '50%',
                 }}
             >
-                graphs will be here, but not now 😢
+                {(() => {
+                    if (isLoading) {
+                        return (
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    height: '100%',
+                                }}
+                            >
+                                <CircularProgress />
+                            </Box>
+                        );
+                    }
+                    if (launchesError || GDPError) {
+                        return <Error />;
+                    }
+                    return <Chart />;
+                })()}
             </Box>
         </Box>
     );

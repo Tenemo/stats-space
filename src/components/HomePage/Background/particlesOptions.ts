@@ -47,7 +47,7 @@ export const particlesOptions: ISourceOptions = {
                 enable: true,
                 area: 1200,
             },
-            value: 80,
+            value: 120,
         },
         opacity: {
             animation: {

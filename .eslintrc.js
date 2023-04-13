@@ -69,6 +69,7 @@ module.exports = {
         'no-use-before-define': OFF, // @typescript-eslint/no-use-before-define replaces this rule
         'no-restricted-exports': OFF,
         'no-shadow': OFF, // https://github.com/typescript-eslint/tslint-to-eslint-config/issues/856
+        'no-void': OFF,
 
         'react/prop-types': OFF,
         'react/prefer-stateless-function': OFF,
