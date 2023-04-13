@@ -1,5 +1,6 @@
 import { Button, Box } from '@mui/material';
 import React, { ReactElement, memo, useMemo } from 'react';
+import { isMobile } from 'react-device-detect';
 import {
     LineChart,
     Line,
@@ -67,9 +68,10 @@ const Chart = (): ReactElement => {
         <Box
             sx={{
                 display: 'flex',
-                height: '100%',
-                width: '100%',
                 flexDirection: 'column',
+                width: isMobile ? '100%' : '90%',
+                height: isMobile ? '100%' : '50%',
+                minHeight: '400px',
             }}
         >
             <ResponsiveContainer height="90%" width="100%">
@@ -83,7 +85,12 @@ const Chart = (): ReactElement => {
                     }}
                 >
                     <XAxis dataKey="year" />
-                    <YAxis orientation="left" stroke="#8884d8" yAxisId="left">
+                    <YAxis
+                        domain={[0, 160]}
+                        orientation="left"
+                        stroke="#8884d8"
+                        yAxisId="left"
+                    >
                         <Label
                             angle={270}
                             offset={-10}
@@ -96,7 +103,8 @@ const Chart = (): ReactElement => {
                         />
                     </YAxis>
                     <YAxis
-                        interval={0}
+                        domain={[0, 90 * 1000 * 1000 * 1000 * 1000]}
+                        interval="preserveStartEnd"
                         orientation="right"
                         stroke="#82ca9d"
                         tickFormatter={(value: number) =>

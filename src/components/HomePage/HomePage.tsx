@@ -61,8 +61,8 @@ export const HomePage = (): ReactElement => {
                     borderRadius: '10px',
                     transition: 'background-color 2000ms ease-in-out',
                     mt: 2,
-                    width: '90%',
-                    height: '50%',
+                    width: '100%',
+                    height: '100%',
                     minHeight: '400px',
                 }}
             >
