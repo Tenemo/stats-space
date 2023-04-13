@@ -48,7 +48,7 @@ export class App extends Component<Props> {
 
     componentDidMount(): void {
         const { appStoreVersion, resetState } = this.props;
-        if (!!appStoreVersion && appStoreVersion !== packageJson.version) {
+        if (appStoreVersion !== packageJson.version) {
             resetState();
         }
     }
@@ -93,22 +93,21 @@ export class App extends Component<Props> {
                                     </div>
                                 );
                             }
-                            if (
-                                !!appStoreVersion &&
-                                appStoreVersion !== packageJson.version
-                            ) {
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        height: '100%',
-                                        width: '100%',
-                                    }}
-                                >
-                                    <CircularProgress />
-                                </Box>;
+                            if (appStoreVersion !== packageJson.version) {
+                                return (
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            height: '100%',
+                                            width: '100%',
+                                        }}
+                                    >
+                                        <CircularProgress />
+                                    </Box>
+                                );
                             }
                             return (
                                 <>
