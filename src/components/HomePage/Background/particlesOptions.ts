@@ -39,7 +39,7 @@ export const particlesOptions: ISourceOptions = {
                 default: 'out',
             },
             random: false,
-            speed: 0.03,
+            speed: 0.05,
             straight: true,
         },
         number: {
