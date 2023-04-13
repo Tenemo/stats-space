@@ -1,4 +1,4 @@
-import { Box, useTheme, CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import React, { ReactElement, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 
@@ -7,14 +7,11 @@ import Chart from './Chart';
 
 import Error from 'components/Error';
 import { useSelector, useDispatch } from 'store';
-import { getAppTheme } from 'store/app/appSelectors';
 import { fetchLaunches, fetchGDP } from 'store/stats/statsActions';
 import { getStatsLaunches, getStatsGDP } from 'store/stats/statsSelectors';
 import './homePage.scss';
 
 export const HomePage = (): ReactElement => {
-    const appTheme = useSelector(getAppTheme);
-    const theme = useTheme();
     const dispatch = useDispatch();
     const {
         response: launchesResponse,
@@ -55,10 +52,6 @@ export const HomePage = (): ReactElement => {
             <Box
                 sx={{
                     zIndex: 1,
-                    backgroundColor:
-                        appTheme === 'dark'
-                            ? theme.palette.background.default
-                            : '#222',
                     borderRadius: '10px',
                     transition: 'background-color 2000ms ease-in-out',
                     mt: 2,

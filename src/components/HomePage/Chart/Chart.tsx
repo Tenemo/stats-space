@@ -16,6 +16,7 @@ import ChartFilters from './ChartFilters';
 import CustomTooltip from './CustomTooltip';
 
 import { useSelector } from 'store';
+import { getAppTheme } from 'store/app/appSelectors';
 import { exportChartData } from 'store/stats/statsActions';
 import {
     getStatsLaunches,
@@ -26,6 +27,7 @@ import { ChartData } from 'store/stats/statsTypes';
 import { numberToBillions } from 'utils/formatters';
 
 const Chart = (): ReactElement => {
+    const appTheme = useSelector(getAppTheme);
     const { response: launchesResponse } = useSelector(getStatsLaunches);
     const { response: GDPResponse } = useSelector(getStatsGDP);
     const filters = useSelector(getStatsFilters);
@@ -114,6 +116,11 @@ const Chart = (): ReactElement => {
         filters.country,
     ]);
 
+    const colors = {
+        launches: appTheme === 'dark' ? '#8884d8' : '#612200',
+        gdp: appTheme === 'dark' ? '#82ca9d' : '#fff',
+    };
+
     return (
         <Box
             sx={{
@@ -121,6 +128,7 @@ const Chart = (): ReactElement => {
                 flexDirection: 'column',
                 width: '100%',
                 height: '100%',
+                m: 1,
             }}
         >
             <Typography>Total launches: {launchesCount}</Typography>
@@ -140,14 +148,14 @@ const Chart = (): ReactElement => {
                             filters.country === 'all' ? [0, 160] : undefined
                         }
                         orientation="left"
-                        stroke="#8884d8"
+                        stroke={colors.launches}
                         yAxisId="left"
                     >
                         <Label
                             angle={270}
                             offset={-10}
                             position="left"
-                            stroke="#8884d8"
+                            stroke={colors.launches}
                             style={{
                                 textAnchor: 'middle',
                             }}
@@ -162,7 +170,7 @@ const Chart = (): ReactElement => {
                         }
                         interval="preserveStartEnd"
                         orientation="right"
-                        stroke="#82ca9d"
+                        stroke={colors.gdp}
                         tickFormatter={(value: number) =>
                             numberToBillions(value)
                         }
@@ -172,7 +180,7 @@ const Chart = (): ReactElement => {
                         <Label
                             angle={90}
                             position="right"
-                            stroke="#82ca9d"
+                            stroke={colors.gdp}
                             style={{
                                 textAnchor: 'middle',
                             }}
@@ -184,7 +192,7 @@ const Chart = (): ReactElement => {
                     <Legend />
                     <Bar
                         dataKey="launches"
-                        stroke="#8884d8"
+                        fill={colors.launches}
                         type="monotone"
                         yAxisId="left"
                     />
@@ -192,7 +200,7 @@ const Chart = (): ReactElement => {
                         activeDot={{ r: 8 }}
                         dataKey="gdp"
                         dot={false}
-                        stroke="#82ca9d"
+                        stroke={colors.gdp}
                         type="monotone"
                         yAxisId="right"
                     />

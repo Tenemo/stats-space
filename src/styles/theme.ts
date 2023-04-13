@@ -75,6 +75,10 @@ export const lightTheme = createTheme({
         background: {
             default: '#f5f5f5',
         },
+        text: {
+            primary: '#000',
+            secondary: '#000',
+        },
     },
     ...common,
 });

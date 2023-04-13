@@ -34,6 +34,7 @@ const CustomTooltip = ({
                 border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 1,
                 p: 1,
+                color: theme.palette.text.secondary,
             }}
         >
             <Typography variant="body2">{`Year: ${
