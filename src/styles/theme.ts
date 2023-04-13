@@ -47,7 +47,7 @@ export const darkTheme = createTheme({
             default: `rgb(5, 5, 12)`,
         },
         text: {
-            primary: '#f5f5f5',
+            primary: '#dddddd',
             secondary: '#ffffff',
         },
     },

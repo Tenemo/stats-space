@@ -39,14 +39,14 @@ export const getParticlesOptions = (
             enable: true,
         },
         move: {
-            direction: 'none',
+            direction: 'right',
             enable: true,
             outModes: {
                 default: 'out',
             },
-            random: true,
-            speed: 0.1,
-            straight: false,
+            random: false,
+            speed: 0.05,
+            straight: true,
         },
         number: {
             density: {
@@ -58,7 +58,7 @@ export const getParticlesOptions = (
         opacity: {
             animation: {
                 enable: true,
-                speed: 0.1,
+                speed: 0.4,
                 sync: false,
             },
             value: { min: 0, max: 1 },

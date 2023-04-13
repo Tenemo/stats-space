@@ -42,12 +42,11 @@ export const HomePage = (): ReactElement => {
                         width: '100%',
                         height: '100%',
                         background: `linear-gradient(
-                            to top,
-                            #2980b9 0%,
-                            #3d9ad9 25%,
-                            #6dd5fa 50%,
-                            #b4e4fd 75%,
-                            #ffffff 100%
+                            to bottom,
+                            #2980b9 5%,
+                            #3d9ad9 35%,
+                            #6dd5fa 65%,
+                            #aae0fa 100%
                         )`,
                         opacity: appTheme === 'dark' ? 0 : 1,
                         transition: 'opacity 2000ms ease-in-out',

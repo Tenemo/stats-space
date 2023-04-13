@@ -24,7 +24,6 @@ export const Header = (): ReactElement => {
             display="flex"
             justifyContent="space-between"
             sx={{
-                borderBottom: `1px solid ${theme.palette.primary.main}`,
                 px: 1,
                 zIndex: 1,
             }}
