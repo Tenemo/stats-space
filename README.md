@@ -14,14 +14,14 @@ Since the data used doesn't get stale quickly, the front-end application caches 
 
 #### Front-end:
 
-1. Install Node.js, at least 16.17.1, include `npm` in installation.
+1. Install Node.js, at least 16.17.1, include `npm` in the installation.
 2. `npm install`
 3. `npm start`
    Front-end will try to connect, by default, to the API at http://localhost:4000.
 
 #### Back-end:
 
-1. Install Node.js, at least 16.14, include `npm` in installation.
+1. Install Node.js, at least 16.14, include `npm` in the installation.
 2. Install Docker.
 3. Clone the [back-end repo](github.com/Tenemo/stats-space-backend): `git clone git@github.com:Tenemo/stats-space-backend.git`.
 4. `docker compose up -d`
@@ -53,7 +53,3 @@ Since the data used doesn't get stale quickly, the front-end application caches 
 -   Launch service providers: [https://ll.thespacedevs.com/2.2.0/agencies/](https://ll.thespacedevs.com/2.2.0/agencies/)
 -   World Development Indicators data: [https://datacatalog.worldbank.org/search/dataset/0037712](https://datacatalog.worldbank.org/search/dataset/0037712), indicators list: [https://data.worldbank.org/indicator/](https://data.worldbank.org/indicator/)
 -   Country codes mapping: [https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/slim-3/slim-3.json](https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/slim-3/slim-3.json)
-
-### To-do (maybe):
-
--   favicon
