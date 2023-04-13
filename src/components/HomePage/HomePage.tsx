@@ -33,11 +33,37 @@ export const HomePage = (): ReactElement => {
                     zIndex: 0,
                 }}
             >
-                <Particles
-                    id="tsparticles"
-                    init={particlesInit}
-                    options={particlesOptions}
+                <Box
+                    sx={{
+                        zIndex: 1,
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        background: `linear-gradient(
+                            to top,
+                            #2980b9 0%,
+                            #3d9ad9 25%,
+                            #6dd5fa 50%,
+                            #b4e4fd 75%,
+                            #ffffff 100%
+                        )`,
+                        opacity: appTheme === 'dark' ? 0 : 1,
+                        transition: 'opacity 2000ms ease-in-out',
+                    }}
                 />
+                <Box
+                    sx={{
+                        zIndex: 0,
+                    }}
+                >
+                    <Particles
+                        id="tsparticles"
+                        init={particlesInit}
+                        options={particlesOptions}
+                    />
+                </Box>
             </Box>
             <Box
                 sx={{

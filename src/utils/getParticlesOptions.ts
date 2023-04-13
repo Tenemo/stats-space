@@ -33,7 +33,7 @@ export const getParticlesOptions = (
     },
     particles: {
         color: {
-            value: theme === 'dark' ? '#eee' : '#333',
+            value: theme === 'dark' ? '#eee' : '',
         },
         collisions: {
             enable: true,
