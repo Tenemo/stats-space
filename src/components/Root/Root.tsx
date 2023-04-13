@@ -24,14 +24,20 @@ export const Root = (): ReactElement => {
             }
         });
     }, []);
-
     const currentStoreVersion = getAppStoreVersion(store.getState());
-    const purgeStore = async (): Promise<void> => {
-        await persistor.purge();
-    };
-    if (!!currentStoreVersion && currentStoreVersion !== packageJson.version) {
-        void purgeStore();
-    }
+
+    useEffect(() => {
+        const purgeStore = async (): Promise<void> => {
+            await persistor.purge();
+        };
+        if (
+            !!currentStoreVersion &&
+            currentStoreVersion !== packageJson.version
+        ) {
+            void purgeStore();
+        }
+    }, [currentStoreVersion]);
+
     return (
         <Provider store={store}>
             <PersistGate loading={<CircularProgress />} persistor={persistor}>
