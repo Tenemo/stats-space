@@ -1,4 +1,9 @@
-import { CssBaseline, ThemeProvider, CircularProgress } from '@mui/material';
+import {
+    CssBaseline,
+    ThemeProvider,
+    CircularProgress,
+    Box,
+} from '@mui/material';
 import React, { Component, ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { connect } from 'react-redux';
@@ -93,7 +98,20 @@ export class App extends Component<Props> {
                                 !!appStoreVersion &&
                                 appStoreVersion !== packageJson.version
                             ) {
-                                return <CircularProgress />;
+                                return (
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            height: '100%',
+                                            width: '100%',
+                                        }}
+                                    >
+                                        <CircularProgress />
+                                    </Box>
+                                );
                             }
                             return (
                                 <>

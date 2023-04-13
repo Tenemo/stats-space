@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Box } from '@mui/material';
 import React, { ReactElement, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
@@ -24,7 +24,24 @@ export const Root = (): ReactElement => {
 
     return (
         <Provider store={store}>
-            <PersistGate loading={<CircularProgress />} persistor={persistor}>
+            <PersistGate
+                loading={
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '100%',
+                            width: '100%',
+                            backgroundColor: `rgb(5, 5, 12)`,
+                        }}
+                    >
+                        <CircularProgress />
+                    </Box>
+                }
+                persistor={persistor}
+            >
                 <HelmetProvider>
                     <App />
                 </HelmetProvider>
