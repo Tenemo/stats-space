@@ -133,10 +133,10 @@ module.exports = {
             },
         ],
         '@typescript-eslint/explicit-module-boundary-types': ERROR,
-        '@typescript-eslint/no-unused-vars': ERROR,
         '@typescript-eslint/no-use-before-define': ERROR,
         '@typescript-eslint/unbound-method': ERROR,
         '@typescript-eslint/no-shadow': [ERROR],
+        'eslint@typescript-eslint/no-unused-vars': OFF, // ts(6133) replaces this
 
         'jest/no-commented-out-tests': ERROR,
     },

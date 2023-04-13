@@ -8,6 +8,8 @@ export const STATS_GDP_REQUEST = 'STATS_GDP_REQUEST';
 export const STATS_GDP_FAILURE = 'STATS_GDP_FAILURE';
 export const STATS_GDP_SUCCESS = 'STATS_GDP_SUCCESS';
 
+export const STATS_FILTER_CHART = 'STATS_FILTER_CHART';
+
 export type WDIRowResponse = {
     [year: string]: string;
     countryName: string;
@@ -46,6 +48,11 @@ export type LaunchesResponse = {
 
 export type GDPResponse = Record<string, WDIRowResponse>;
 
+export type StatsFilters = {
+    startYear: number;
+    endYear: number;
+};
+
 export type StatsState = {
     launches: {
         isLoading: boolean;
@@ -57,6 +64,7 @@ export type StatsState = {
         error: UnknownError | null;
         response: GDPResponse | null;
     };
+    filters: StatsFilters;
 };
 
 type LaunchesRequestAction = {
@@ -90,10 +98,18 @@ type GDPSuccessAction = {
     };
 };
 
+type FilterChart = {
+    type: typeof STATS_FILTER_CHART;
+    payload: {
+        filters: StatsFilters;
+    };
+};
+
 export type StatsActionTypes =
     | LaunchesRequestAction
     | LaunchesFailureAction
     | LaunchesSuccessAction
     | GDPRequestAction
     | GDPFailureAction
-    | GDPSuccessAction;
+    | GDPSuccessAction
+    | FilterChart;

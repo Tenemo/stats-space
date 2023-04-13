@@ -8,6 +8,8 @@ import {
     STATS_GDP_REQUEST,
     STATS_GDP_FAILURE,
     STATS_GDP_SUCCESS,
+    STATS_FILTER_CHART,
+    StatsFilters,
 } from './statsTypes';
 
 import { CommonDispatch } from 'store/types';
@@ -67,3 +69,8 @@ export const fetchGDP =
             dispatch(gdpFailure(error as UnknownError));
         }
     };
+
+export const filterChart = (filters: StatsFilters): StatsActionTypes => ({
+    type: STATS_FILTER_CHART,
+    payload: { filters },
+});

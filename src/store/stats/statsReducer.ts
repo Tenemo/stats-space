@@ -1,3 +1,4 @@
+import { MIN_YEAR, MAX_YEAR } from 'constants/appConstants';
 import {
     StatsState,
     StatsActionTypes,
@@ -7,6 +8,7 @@ import {
     STATS_GDP_REQUEST,
     STATS_GDP_FAILURE,
     STATS_GDP_SUCCESS,
+    STATS_FILTER_CHART,
 } from 'store/stats/statsTypes';
 
 export const initialStatsState: StatsState = {
@@ -19,6 +21,10 @@ export const initialStatsState: StatsState = {
         isLoading: false,
         error: null,
         response: null,
+    },
+    filters: {
+        startYear: MIN_YEAR,
+        endYear: MAX_YEAR,
     },
 };
 
@@ -84,6 +90,11 @@ export const statsReducer = (
                     error: null,
                     response: action.payload.response,
                 },
+            };
+        case STATS_FILTER_CHART:
+            return {
+                ...state,
+                filters: action.payload.filters,
             };
         default:
             return state;

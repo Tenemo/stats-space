@@ -10,21 +10,31 @@ import {
     Label,
 } from 'recharts';
 
+import ChartFilters from './ChartFilters';
 import CustomTooltip from './CustomTooltip';
 
 import { useSelector } from 'store';
-import { getStatsLaunches, getStatsGDP } from 'store/stats/statsSelectors';
+import {
+    getStatsLaunches,
+    getStatsGDP,
+    getStatsFilters,
+} from 'store/stats/statsSelectors';
 import { numberToBillions } from 'utils/formatters';
 
 const Chart = (): ReactElement => {
     const { response: launchesResponse } = useSelector(getStatsLaunches);
     const { response: GDPResponse } = useSelector(getStatsGDP);
+    const filters = useSelector(getStatsFilters);
 
     const chartData = useMemo(() => {
         if (!launchesResponse?.launches || !GDPResponse) {
             return [];
         }
-        const years = Object.keys(launchesResponse.launches);
+        const years = Object.keys(launchesResponse.launches).filter(
+            (year) =>
+                parseInt(year, 10) >= filters.startYear &&
+                parseInt(year, 10) <= filters.endYear,
+        );
         return years
             .map((year) => {
                 const launchesCount = launchesResponse.launches[year].length;
@@ -43,71 +53,81 @@ const Chart = (): ReactElement => {
                 };
             })
             .slice(0, -1); // remove current year due to incomplete data for the year
-    }, [launchesResponse, GDPResponse]);
+    }, [
+        launchesResponse?.launches,
+        GDPResponse,
+        filters.startYear,
+        filters.endYear,
+    ]);
 
     return (
-        <ResponsiveContainer height="90%" width="100%">
-            <LineChart
-                data={chartData}
-                margin={{
-                    top: 20,
-                    right: 20,
-                    bottom: 20,
-                    left: 20,
-                }}
-            >
-                <XAxis dataKey="year" />
-                <YAxis orientation="left" stroke="#8884d8" yAxisId="left">
-                    <Label
-                        angle={270}
-                        offset={-10}
-                        position="left"
-                        stroke="#8884d8"
-                        style={{
-                            textAnchor: 'middle',
-                        }}
-                        value="No. of launches"
-                    />
-                </YAxis>
-                <YAxis
-                    interval={0}
-                    orientation="right"
-                    stroke="#82ca9d"
-                    tickFormatter={(value: number) => numberToBillions(value)}
-                    width={90}
-                    yAxisId="right"
+        <>
+            <ResponsiveContainer height="90%" width="100%">
+                <LineChart
+                    data={chartData}
+                    margin={{
+                        top: 20,
+                        right: 20,
+                        bottom: 20,
+                        left: 20,
+                    }}
                 >
-                    <Label
-                        angle={90}
-                        position="right"
+                    <XAxis dataKey="year" />
+                    <YAxis orientation="left" stroke="#8884d8" yAxisId="left">
+                        <Label
+                            angle={270}
+                            offset={-10}
+                            position="left"
+                            stroke="#8884d8"
+                            style={{
+                                textAnchor: 'middle',
+                            }}
+                            value="No. of launches"
+                        />
+                    </YAxis>
+                    <YAxis
+                        interval={0}
+                        orientation="right"
                         stroke="#82ca9d"
-                        style={{
-                            textAnchor: 'middle',
-                        }}
+                        tickFormatter={(value: number) =>
+                            numberToBillions(value)
+                        }
+                        width={90}
+                        yAxisId="right"
                     >
-                        GDP [Billions USD]
-                    </Label>
-                </YAxis>
-                <Tooltip content={CustomTooltip} />
-                <Legend />
-                <Line
-                    activeDot={{ r: 8 }}
-                    dataKey="launches"
-                    dot={false}
-                    stroke="#8884d8"
-                    type="monotone"
-                    yAxisId="left"
-                />
-                <Line
-                    activeDot={{ r: 8 }}
-                    dataKey="gdp"
-                    dot={false}
-                    stroke="#82ca9d"
-                    type="monotone"
-                    yAxisId="right"
-                />
-            </LineChart>
-        </ResponsiveContainer>
+                        <Label
+                            angle={90}
+                            position="right"
+                            stroke="#82ca9d"
+                            style={{
+                                textAnchor: 'middle',
+                            }}
+                        >
+                            GDP [Billions USD]
+                        </Label>
+                    </YAxis>
+                    <Tooltip content={CustomTooltip} />
+                    <Legend />
+                    <Line
+                        activeDot={{ r: 8 }}
+                        dataKey="launches"
+                        dot={false}
+                        stroke="#8884d8"
+                        type="monotone"
+                        yAxisId="left"
+                    />
+                    <Line
+                        activeDot={{ r: 8 }}
+                        dataKey="gdp"
+                        dot={false}
+                        stroke="#82ca9d"
+                        type="monotone"
+                        yAxisId="right"
+                    />
+                </LineChart>
+            </ResponsiveContainer>
+            <ChartFilters />
+        </>
     );
 };
 

@@ -30,7 +30,7 @@ export const darkTheme = createTheme({
         mode: 'dark',
         primary: {
             main: deepPurple[900],
-            light: deepPurple[700],
+            light: deepPurple[400],
             dark: '#000',
             contrastText: '#ffffff',
         },

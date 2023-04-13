@@ -63,6 +63,7 @@ export const HomePage = (): ReactElement => {
                     mt: 2,
                     width: '90%',
                     height: '50%',
+                    minHeight: '400px',
                 }}
             >
                 {(() => {

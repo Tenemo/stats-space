@@ -1,5 +1,5 @@
 import { Box, useTheme, Typography } from '@mui/material';
-import React, { ReactElement, memo } from 'react';
+import React, { ReactElement } from 'react';
 import { TooltipProps } from 'recharts';
 import {
     ValueType,
@@ -48,4 +48,4 @@ CustomTooltip.defaultProps = {
     payload: [],
     label: '',
 };
-export default memo(CustomTooltip);
+export default CustomTooltip; // Can't be memoized
