@@ -8,6 +8,7 @@
 
 -   Launch data: [https://ll.thespacedevs.com/2.2.0/launch/](https://ll.thespacedevs.com/2.2.0/launch/)
 -   Launch service providers: [https://ll.thespacedevs.com/2.2.0/agencies/](https://ll.thespacedevs.com/2.2.0/agencies/)
+-   World Development Indicators data: [https://datacatalog.worldbank.org/search/dataset/0037712](https://datacatalog.worldbank.org/search/dataset/0037712)
 -   Country codes mapping: [https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/slim-3/slim-3.json](https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/slim-3/slim-3.json)
 
 ### To-do (maybe):
