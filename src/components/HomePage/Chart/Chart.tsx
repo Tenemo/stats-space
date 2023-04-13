@@ -192,7 +192,13 @@ const Chart = (): ReactElement => {
                     <Legend />
                     <Bar
                         dataKey="launches"
-                        fill={colors.launches}
+                        fill="transparent"
+                        {...(appTheme === 'dark'
+                            ? {
+                                  stroke: colors.launches,
+                                  strokeWidth: 2,
+                              }
+                            : { fill: colors.launches })}
                         type="monotone"
                         yAxisId="left"
                     />
@@ -201,6 +207,7 @@ const Chart = (): ReactElement => {
                         dataKey="gdp"
                         dot={false}
                         stroke={colors.gdp}
+                        strokeWidth={2}
                         type="monotone"
                         yAxisId="right"
                     />
