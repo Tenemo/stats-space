@@ -17,10 +17,15 @@ const CustomTooltip = ({
 
     if (!active || !payload) return null;
 
-    const { launches, gdp } = payload[0].payload as {
-        launches: number;
-        gdp: number;
-    };
+    const data = payload?.[0] as { payload: { launches: number; gdp: number } };
+
+    let launches = 0;
+    let gdp = 0;
+
+    if (data) {
+        launches = data?.payload?.launches;
+        gdp = data?.payload?.gdp;
+    }
 
     return (
         <Box

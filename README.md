@@ -42,6 +42,7 @@ Since the data used doesn't get stale quickly, the front-end application caches 
 -   Front-end hosting + CDN: [Netlify](https://www.netlify.com/)
 -   Back-end hosting: [Heroku](https://heroku.com)
 -   Database: [Heroku Postgres](https://www.heroku.com/postgres)
+-   Error logging for both front-end and back-end: [Sentry.io](https://sentry.io)
 -   CI/CD: [GitHub](https://github.com/) integrations with [Heroku](https://heroku.com) and [Netlify](https://www.netlify.com/), automatic `master` branch deployments to production environments for both repositories after automatic code quality checks and tests. [Husky](https://typicode.github.io/husky/#/) prevents committing code that doesn't meet the below checks, too. These are run before every deployment with any errors aborting the deployment:
     1. Code static analysis passes with no errors, including enforcing automatic formatting. Additionally, CSS/SCSS static analysis on front-end.
     2. Typechecking passes with no errors.
