@@ -6,11 +6,13 @@ import Chart from './Chart';
 
 import Error from 'components/Error';
 import { useSelector, useDispatch } from 'store';
+import { getAppTheme } from 'store/app/appSelectors';
 import { fetchLaunches, fetchGDP } from 'store/stats/statsActions';
 import { getStatsLaunches, getStatsGDP } from 'store/stats/statsSelectors';
 import './homePage.scss';
 
 export const HomePage = (): ReactElement => {
+    const appTheme = useSelector(getAppTheme);
     const theme = useTheme();
     const dispatch = useDispatch();
     const {
@@ -52,7 +54,12 @@ export const HomePage = (): ReactElement => {
             <Box
                 sx={{
                     zIndex: 1,
-                    backgroundColor: theme.palette.background.default,
+                    backgroundColor:
+                        appTheme === 'dark'
+                            ? theme.palette.background.default
+                            : '#222',
+                    borderRadius: '10px',
+                    transition: 'background-color 2000ms ease-in-out',
                     mt: 10,
                     width: '90%',
                     height: '50%',

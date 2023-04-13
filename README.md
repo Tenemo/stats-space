@@ -6,7 +6,7 @@ Front-end repository for [stats.space](https://stats.space)
 
 Back-end repository: [github.com/Tenemo/stats-space-backend](https://github.com/Tenemo/stats-space-backend)
 
-### Caching
+### Offline-first
 
 Since the data used doesn't get stale quickly, the front-end application caches the full dataset once it is loaded, working offline after the initial connection.
 
