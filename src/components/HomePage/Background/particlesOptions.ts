@@ -1,15 +1,9 @@
-import { Theme } from '@mui/material';
 import type { ISourceOptions } from 'tsparticles-engine';
 
-import { AppTheme } from 'store/app/appTypes';
-
-export const getParticlesOptions = (
-    theme: AppTheme,
-    muiTheme: Theme,
-): ISourceOptions => ({
+export const particlesOptions: ISourceOptions = {
     background: {
         color: {
-            value: muiTheme.palette.background.default,
+            value: `rgb(5, 5, 12)`,
         },
     },
     fpsLimit: 165,
@@ -33,7 +27,7 @@ export const getParticlesOptions = (
     },
     particles: {
         color: {
-            value: theme === 'dark' ? '#eee' : '',
+            value: '#eee',
         },
         collisions: {
             enable: true,
@@ -45,7 +39,7 @@ export const getParticlesOptions = (
                 default: 'out',
             },
             random: false,
-            speed: 0.05,
+            speed: 0.03,
             straight: true,
         },
         number: {
@@ -70,4 +64,4 @@ export const getParticlesOptions = (
             value: { min: 1, max: 3 },
         },
     },
-});
+};
