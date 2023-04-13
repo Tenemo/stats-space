@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Box } from '@mui/material';
 import React, { ReactElement, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
@@ -27,19 +27,29 @@ export const Root = (): ReactElement => {
     const currentStoreVersion = getAppStoreVersion(store.getState());
 
     useEffect(() => {
-        const purgeStore = async (): Promise<void> => {
-            await persistor.purge();
-        };
         if (
             !!currentStoreVersion &&
             currentStoreVersion !== packageJson.version
         ) {
-            void purgeStore();
+            void persistor.purge();
             store.dispatch({ type: 'RESET_STATE' });
         }
     }, [currentStoreVersion]);
     if (!!currentStoreVersion && currentStoreVersion !== packageJson.version) {
-        return <CircularProgress />;
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100%',
+                    width: '100%',
+                }}
+            >
+                <CircularProgress />
+            </Box>
+        );
     }
     return (
         <Provider store={store}>
