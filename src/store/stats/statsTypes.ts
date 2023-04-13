@@ -9,6 +9,7 @@ export const STATS_GDP_FAILURE = 'STATS_GDP_FAILURE';
 export const STATS_GDP_SUCCESS = 'STATS_GDP_SUCCESS';
 
 export const STATS_FILTER_CHART = 'STATS_FILTER_CHART';
+export const RESET_STATE = 'RESET_STATE';
 
 export type WDIRowResponse = {
     [year: string]: string;
@@ -110,6 +111,9 @@ type FilterChart = {
         filters: StatsFilters;
     };
 };
+type ResetStateAction = {
+    type: typeof RESET_STATE;
+};
 
 export type StatsActionTypes =
     | LaunchesRequestAction
@@ -118,4 +122,5 @@ export type StatsActionTypes =
     | GDPRequestAction
     | GDPFailureAction
     | GDPSuccessAction
-    | FilterChart;
+    | FilterChart
+    | ResetStateAction;

@@ -46,6 +46,7 @@ export class App extends Component<Props> {
 
     componentDidMount(): void {
         const { appStoreVersion } = this.props;
+
         const purgeStore = async (): Promise<void> => {
             await persistor.purge();
         };

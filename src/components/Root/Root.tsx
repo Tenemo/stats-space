@@ -1,11 +1,14 @@
-import { CircularProgress, Box } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import React, { ReactElement, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import packageJson from '../../../package.json';
+
 import App from 'components/App';
 import { store, persistor } from 'store';
+import { getAppStoreVersion } from 'store/app/appSelectors';
 
 import 'styles/global.scss';
 
@@ -21,27 +24,26 @@ export const Root = (): ReactElement => {
             }
         });
     }, []);
+    const currentStoreVersion = getAppStoreVersion(store.getState());
 
+    useEffect(() => {
+        const purgeStore = async (): Promise<void> => {
+            await persistor.purge();
+        };
+        if (
+            !!currentStoreVersion &&
+            currentStoreVersion !== packageJson.version
+        ) {
+            void purgeStore();
+            store.dispatch({ type: 'RESET_STATE' });
+        }
+    }, [currentStoreVersion]);
+    if (!!currentStoreVersion && currentStoreVersion !== packageJson.version) {
+        return <CircularProgress />;
+    }
     return (
         <Provider store={store}>
-            <PersistGate
-                loading={
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            height: '100%',
-                            width: '100%',
-                            backgroundColor: `rgb(5, 5, 12)`,
-                        }}
-                    >
-                        <CircularProgress />
-                    </Box>
-                }
-                persistor={persistor}
-            >
+            <PersistGate loading={<CircularProgress />} persistor={persistor}>
                 <HelmetProvider>
                     <App />
                 </HelmetProvider>

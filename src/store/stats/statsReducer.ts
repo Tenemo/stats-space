@@ -1,4 +1,4 @@
-import { MIN_YEAR, MAX_YEAR } from 'constants/appConstants';
+import { MIN_YEAR, MAX_YEAR, RESET_STATE } from 'constants/appConstants';
 import {
     StatsState,
     StatsActionTypes,
@@ -96,6 +96,9 @@ export const statsReducer = (
                 ...state,
                 filters: action.payload.filters,
             };
+        case RESET_STATE: {
+            return initialStatsState;
+        }
         default:
             return state;
     }
