@@ -22,7 +22,7 @@ export const HomePage = (): ReactElement => {
                     zIndex: 1,
                 }}
             >
-                graphs here
+                graphs will be here, but not now 😢
             </Box>
         </Box>
     );

@@ -20,7 +20,7 @@ export const particlesOptions: ISourceOptions = {
                 distance: 120,
                 radius: 120,
                 links: {
-                    opacity: 0.05,
+                    opacity: 0.1,
                 },
             },
         },
