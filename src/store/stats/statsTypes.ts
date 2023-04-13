@@ -67,6 +67,12 @@ export type StatsState = {
     filters: StatsFilters;
 };
 
+export type ChartData = {
+    year: string;
+    launches: number | null;
+    gdp: number | null;
+}[];
+
 type LaunchesRequestAction = {
     type: typeof STATS_LAUNCHES_REQUEST;
 };

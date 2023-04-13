@@ -29,6 +29,7 @@ const YearRangeFilter = (): ReactElement => {
                 display: 'flex',
                 justifyContent: 'center',
                 flexWrap: 'wrap',
+                mx: '21px',
             }}
         >
             <Typography sx={{ mb: 1 }}>

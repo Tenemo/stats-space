@@ -4,6 +4,7 @@ export type AppTheme = 'light' | 'dark';
 
 export type AppState = {
     theme: AppTheme;
+    storeVersion: string;
 };
 
 type ToggleThemeAction = {

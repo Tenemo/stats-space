@@ -1,3 +1,4 @@
+import { Button, Box } from '@mui/material';
 import React, { ReactElement, memo, useMemo } from 'react';
 import {
     LineChart,
@@ -14,11 +15,13 @@ import ChartFilters from './ChartFilters';
 import CustomTooltip from './CustomTooltip';
 
 import { useSelector } from 'store';
+import { exportChartData } from 'store/stats/statsActions';
 import {
     getStatsLaunches,
     getStatsGDP,
     getStatsFilters,
 } from 'store/stats/statsSelectors';
+import { ChartData } from 'store/stats/statsTypes';
 import { numberToBillions } from 'utils/formatters';
 
 const Chart = (): ReactElement => {
@@ -26,7 +29,7 @@ const Chart = (): ReactElement => {
     const { response: GDPResponse } = useSelector(getStatsGDP);
     const filters = useSelector(getStatsFilters);
 
-    const chartData = useMemo(() => {
+    const chartData: ChartData = useMemo(() => {
         if (!launchesResponse?.launches || !GDPResponse) {
             return [];
         }
@@ -61,7 +64,14 @@ const Chart = (): ReactElement => {
     ]);
 
     return (
-        <>
+        <Box
+            sx={{
+                display: 'flex',
+                height: '100%',
+                width: '100%',
+                flexDirection: 'column',
+            }}
+        >
             <ResponsiveContainer height="90%" width="100%">
                 <LineChart
                     data={chartData}
@@ -127,7 +137,14 @@ const Chart = (): ReactElement => {
                 </LineChart>
             </ResponsiveContainer>
             <ChartFilters />
-        </>
+            <Button
+                onClick={() => exportChartData(chartData)}
+                sx={{ mt: 4, alignSelf: 'flex-end' }}
+                variant="contained"
+            >
+                Export to JSON
+            </Button>
+        </Box>
     );
 };
 

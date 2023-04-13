@@ -4,8 +4,11 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import packageJson from '../../../package.json';
+
 import App from 'components/App';
 import { store, persistor } from 'store';
+import { getAppStoreVersion } from 'store/app/appSelectors';
 
 import 'styles/global.scss';
 
@@ -22,6 +25,13 @@ export const Root = (): ReactElement => {
         });
     }, []);
 
+    const currentStoreVersion = getAppStoreVersion(store.getState());
+    const purgeStore = async (): Promise<void> => {
+        await persistor.purge();
+    };
+    if (!!currentStoreVersion && currentStoreVersion !== packageJson.version) {
+        void purgeStore();
+    }
     return (
         <Provider store={store}>
             <PersistGate loading={<CircularProgress />} persistor={persistor}>

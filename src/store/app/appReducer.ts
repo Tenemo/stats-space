@@ -1,7 +1,10 @@
+import packageJson from '../../../package.json';
+
 import { AppState, AppActionTypes, APP_TOGGLE_THEME } from 'store/app/appTypes';
 
 export const initialAppState: AppState = {
     theme: 'dark',
+    storeVersion: packageJson.version,
 };
 
 export const appReducer = (
