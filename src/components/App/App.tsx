@@ -1,4 +1,9 @@
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import {
+    CssBaseline,
+    ThemeProvider,
+    Box,
+    CircularProgress,
+} from '@mui/material';
 import React, { Component, ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { connect } from 'react-redux';
@@ -6,6 +11,8 @@ import { Route, Routes } from 'react-router-dom';
 import { HistoryRouter as Router } from 'redux-first-history/rr6';
 
 import 'normalize.css';
+
+import packageJson from '../../../package.json';
 
 import styles from './app.scss';
 
@@ -15,8 +22,8 @@ import 'fonts/RobotoMono-Regular.woff';
 import Header from 'components/Header';
 import HomePage from 'components/HomePage';
 import NotFound from 'components/NotFound';
-import { history } from 'store';
-import { getAppTheme } from 'store/app/appSelectors';
+import { history, AppDispatch } from 'store';
+import { getAppTheme, getAppStoreVersion } from 'store/app/appSelectors';
 import { RootState } from 'store/types';
 import { darkTheme, lightTheme } from 'styles/theme';
 
@@ -28,6 +35,8 @@ type State = {
 
 type Props = {
     appTheme: string;
+    appStoreVersion: string;
+    resetState: () => void;
 };
 
 export class App extends Component<Props> {
@@ -36,6 +45,13 @@ export class App extends Component<Props> {
     });
 
     readonly state: State = { hasError: false, error: null };
+
+    componentDidMount(): void {
+        const { appStoreVersion, resetState } = this.props;
+        if (!!appStoreVersion && appStoreVersion !== packageJson.version) {
+            resetState();
+        }
+    }
 
     componentDidCatch(
         error: Error | null,
@@ -48,7 +64,7 @@ export class App extends Component<Props> {
 
     render(): ReactElement {
         const { hasError, error, errorInformation } = this.state;
-        const { appTheme } = this.props;
+        const { appTheme, appStoreVersion } = this.props;
         const classNames = `${styles.app} ${
             appTheme === 'dark' ? 'theme-dark' : 'theme-light'
         }`;
@@ -77,6 +93,23 @@ export class App extends Component<Props> {
                                     </div>
                                 );
                             }
+                            if (
+                                !!appStoreVersion &&
+                                appStoreVersion !== packageJson.version
+                            ) {
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        height: '100%',
+                                        width: '100%',
+                                    }}
+                                >
+                                    <CircularProgress />
+                                </Box>;
+                            }
                             return (
                                 <>
                                     <Header />
@@ -100,8 +133,18 @@ export class App extends Component<Props> {
     }
 }
 
-const mapStateToProps = (state: RootState): { appTheme: string } => ({
+const mapStateToProps = (
+    state: RootState,
+): { appTheme: string; appStoreVersion: string } => ({
     appTheme: getAppTheme(state),
+    appStoreVersion: getAppStoreVersion(state),
+});
+const mapDispatchToProps = (
+    dispatch: AppDispatch,
+): {
+    resetState: () => void;
+} => ({
+    resetState: () => dispatch({ type: 'RESET_STATE' }),
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
