@@ -70,6 +70,7 @@ module.exports = {
         'no-restricted-exports': OFF,
         'no-shadow': OFF, // https://github.com/typescript-eslint/tslint-to-eslint-config/issues/856
         'no-void': OFF,
+        camelcase: OFF,
 
         'react/prop-types': OFF,
         'react/prefer-stateless-function': OFF,

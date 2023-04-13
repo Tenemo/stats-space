@@ -25,6 +25,7 @@ export const initialStatsState: StatsState = {
     filters: {
         startYear: MIN_YEAR,
         endYear: MAX_YEAR,
+        country: 'all',
     },
 };
 

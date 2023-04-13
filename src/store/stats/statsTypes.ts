@@ -52,6 +52,7 @@ export type GDPResponse = Record<string, WDIRowResponse>;
 export type StatsFilters = {
     startYear: number;
     endYear: number;
+    country: string;
 };
 
 export type StatsState = {

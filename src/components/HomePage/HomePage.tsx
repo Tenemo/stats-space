@@ -1,5 +1,6 @@
 import { Box, useTheme, CircularProgress } from '@mui/material';
 import React, { ReactElement, useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import Background from './Background';
 import Chart from './Chart';
@@ -61,9 +62,9 @@ export const HomePage = (): ReactElement => {
                     borderRadius: '10px',
                     transition: 'background-color 2000ms ease-in-out',
                     mt: 2,
-                    width: '100%',
-                    height: '100%',
-                    minHeight: '400px',
+                    width: isMobile ? '100%' : '90%',
+                    minHeight: isMobile ? undefined : '500px',
+                    height: isMobile ? '100%' : '70%',
                 }}
             >
                 {(() => {

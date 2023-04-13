@@ -1,8 +1,8 @@
-import { Button, Box } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 import React, { ReactElement, memo, useMemo } from 'react';
-import { isMobile } from 'react-device-detect';
 import {
-    LineChart,
+    ComposedChart,
+    Bar,
     Line,
     XAxis,
     YAxis,
@@ -41,8 +41,25 @@ const Chart = (): ReactElement => {
         );
         return years
             .map((year) => {
-                const launchesCount = launchesResponse.launches[year].length;
-                const totalGDP = Object.values(GDPResponse).reduce(
+                let yearLaunches = launchesResponse.launches[year];
+                if (filters.country !== 'all') {
+                    yearLaunches = yearLaunches.filter(
+                        ({ launch_service_provider_country_code }) =>
+                            launch_service_provider_country_code ===
+                            filters.country,
+                    );
+                }
+                const launchesCount = yearLaunches.length;
+
+                let GDPSelectedCountries = Object.values(GDPResponse);
+
+                if (filters.country !== 'all') {
+                    GDPSelectedCountries = GDPSelectedCountries.filter(
+                        ({ country_code }) => country_code === filters.country,
+                    );
+                }
+
+                const totalGDP = GDPSelectedCountries.reduce(
                     (sum, countryGDP) => {
                         const gdp = countryGDP[year] || '0';
                         return sum + parseFloat(gdp);
@@ -62,6 +79,39 @@ const Chart = (): ReactElement => {
         GDPResponse,
         filters.startYear,
         filters.endYear,
+        filters.country,
+    ]);
+    const launchesCount = useMemo(() => {
+        if (!launchesResponse?.launches) {
+            return 0;
+        }
+
+        const years = Object.keys(launchesResponse.launches).filter(
+            (year) =>
+                parseInt(year, 10) >= filters.startYear &&
+                parseInt(year, 10) <= filters.endYear,
+        );
+
+        let totalLaunchesCount = 0;
+
+        years.forEach((year) => {
+            let yearLaunches = launchesResponse.launches[year];
+            if (filters.country !== 'all') {
+                yearLaunches = yearLaunches.filter(
+                    ({ launch_service_provider_country_code }) =>
+                        launch_service_provider_country_code ===
+                        filters.country,
+                );
+            }
+            totalLaunchesCount += yearLaunches.length;
+        });
+
+        return totalLaunchesCount;
+    }, [
+        launchesResponse?.launches,
+        filters.startYear,
+        filters.endYear,
+        filters.country,
     ]);
 
     return (
@@ -69,13 +119,13 @@ const Chart = (): ReactElement => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: isMobile ? '100%' : '90%',
-                height: isMobile ? '100%' : '50%',
-                minHeight: '400px',
+                width: '100%',
+                height: '100%',
             }}
         >
+            <Typography>Total launches: {launchesCount}</Typography>
             <ResponsiveContainer height="90%" width="100%">
-                <LineChart
+                <ComposedChart
                     data={chartData}
                     margin={{
                         top: 20,
@@ -86,7 +136,9 @@ const Chart = (): ReactElement => {
                 >
                     <XAxis dataKey="year" />
                     <YAxis
-                        domain={[0, 160]}
+                        domain={
+                            filters.country === 'all' ? [0, 160] : undefined
+                        }
                         orientation="left"
                         stroke="#8884d8"
                         yAxisId="left"
@@ -103,7 +155,11 @@ const Chart = (): ReactElement => {
                         />
                     </YAxis>
                     <YAxis
-                        domain={[0, 90 * 1000 * 1000 * 1000 * 1000]}
+                        domain={
+                            filters.country === 'all'
+                                ? [0, 90 * 1000 * 1000 * 1000 * 1000]
+                                : undefined
+                        }
                         interval="preserveStartEnd"
                         orientation="right"
                         stroke="#82ca9d"
@@ -126,10 +182,8 @@ const Chart = (): ReactElement => {
                     </YAxis>
                     <Tooltip content={CustomTooltip} />
                     <Legend />
-                    <Line
-                        activeDot={{ r: 8 }}
+                    <Bar
                         dataKey="launches"
-                        dot={false}
                         stroke="#8884d8"
                         type="monotone"
                         yAxisId="left"
@@ -142,12 +196,12 @@ const Chart = (): ReactElement => {
                         type="monotone"
                         yAxisId="right"
                     />
-                </LineChart>
+                </ComposedChart>
             </ResponsiveContainer>
             <ChartFilters />
             <Button
                 onClick={() => exportChartData(chartData)}
-                sx={{ mt: 4, alignSelf: 'flex-end' }}
+                sx={{ m: 2, alignSelf: 'flex-end' }}
                 variant="contained"
             >
                 Export to JSON

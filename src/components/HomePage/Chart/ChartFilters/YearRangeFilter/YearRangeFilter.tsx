@@ -29,7 +29,7 @@ const YearRangeFilter = (): ReactElement => {
                 display: 'flex',
                 justifyContent: 'center',
                 flexWrap: 'wrap',
-                mx: '21px',
+                mx: '37px',
             }}
         >
             <Typography sx={{ mb: 1 }}>
@@ -89,9 +89,9 @@ const YearRangeFilter = (): ReactElement => {
                                         filters.endYear,
                                     ],
                                     colors: [
-                                        theme.palette.primary.light,
+                                        '#aaa',
                                         theme.palette.primary.main,
-                                        theme.palette.primary.light,
+                                        '#aaa',
                                     ],
                                     min: MIN_YEAR,
                                     max: MAX_YEAR,
