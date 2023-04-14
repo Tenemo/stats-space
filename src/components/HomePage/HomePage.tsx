@@ -1,5 +1,5 @@
 import { Box, CircularProgress } from '@mui/material';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, memo } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import Background from './Background';
@@ -89,4 +89,4 @@ export const HomePage = (): ReactElement => {
     );
 };
 
-export default HomePage;
+export default memo(HomePage);
