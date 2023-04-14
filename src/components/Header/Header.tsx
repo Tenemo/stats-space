@@ -50,6 +50,8 @@ export const Header = (): ReactElement => {
             <Typography
                 sx={{
                     userSelect: 'none',
+                    color: theme.palette.text.secondary,
+                    transition: 'color 2000ms linear',
                 }}
                 variant="h5"
             >
@@ -58,8 +60,9 @@ export const Header = (): ReactElement => {
                 <Link
                     onClick={onPClick}
                     sx={{
+                        color: theme.palette.text.secondary,
+                        transition: 'color 1500ms linear',
                         textDecoration: 'none',
-                        color: theme.palette.text.primary,
                     }}
                 >
                     p

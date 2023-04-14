@@ -37,7 +37,7 @@ export const Background = (): ReactElement => {
                         #aae0fa 100%
                     )`,
                     opacity: appTheme === 'dark' ? 0 : 1,
-                    transition: 'opacity 2000ms ease-in-out',
+                    transition: 'opacity 2000ms linear',
                 }}
             />
             <Box
