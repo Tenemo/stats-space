@@ -1,0 +1,4 @@
+:global .recharts-layer.recharts-bar-rectangle path {
+    transition: fill 2000ms ease-in-out, stroke 2000ms ease-in-out,
+        stroke-width 2000ms ease-in-out;
+}

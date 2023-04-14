@@ -1,12 +1,21 @@
 import { GitHub as GitHubIcon } from '@mui/icons-material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { useTheme, Box, Link, IconButton, Tooltip } from '@mui/material';
+import {
+    useTheme,
+    Box,
+    Link,
+    IconButton,
+    Tooltip,
+    Typography,
+} from '@mui/material';
 import React, { ReactElement } from 'react';
 
 import { useSelector, useDispatch } from 'store';
-import { toggleTheme } from 'store/app/appActions';
+import { toggleTheme, toggleDisplayUI } from 'store/app/appActions';
 import { getAppTheme } from 'store/app/appSelectors';
+
+let clickCount = 0;
 
 export const Header = (): ReactElement => {
     const theme = useTheme();
@@ -15,6 +24,16 @@ export const Header = (): ReactElement => {
 
     const onToggleThemeClick = (): void => {
         dispatch(toggleTheme());
+    };
+
+    const onPClick = (): void => {
+        clickCount += 1;
+        setTimeout(() => {
+            clickCount -= 1;
+        }, 1000);
+        if (clickCount === 5) {
+            dispatch(toggleDisplayUI());
+        }
     };
 
     return (
@@ -28,17 +47,25 @@ export const Header = (): ReactElement => {
                 zIndex: 1,
             }}
         >
-            <Link
-                color={theme.palette.text.primary}
-                href="/"
+            <Typography
                 sx={{
-                    transition: 'color 400ms ease-in-out',
+                    userSelect: 'none',
                 }}
-                underline="none"
                 variant="h5"
             >
-                stats.space
-            </Link>
+                stats.s
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <Link
+                    onClick={onPClick}
+                    sx={{
+                        textDecoration: 'none',
+                        color: theme.palette.text.primary,
+                    }}
+                >
+                    p
+                </Link>
+                ace
+            </Typography>
             <Box
                 alignItems="center"
                 display="flex"

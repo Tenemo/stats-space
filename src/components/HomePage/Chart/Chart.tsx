@@ -16,6 +16,8 @@ import {
 import ChartFilters from './ChartFilters';
 import CustomTooltip from './CustomTooltip';
 
+import './chart.scss';
+
 import { useSelector } from 'store';
 import { getAppTheme } from 'store/app/appSelectors';
 import { exportChartData } from 'store/stats/statsActions';
@@ -197,12 +199,9 @@ const Chart = (): ReactElement => {
                     <Bar
                         dataKey="launches"
                         fill="transparent"
-                        {...(appTheme === 'dark'
-                            ? {
-                                  stroke: colors.launches,
-                                  strokeWidth: 2,
-                              }
-                            : { fill: colors.launches })}
+                        stroke={colors.launches}
+                        strokeWidth={appTheme === 'dark' ? 2 : 0}
+                        {...(appTheme === 'light' && { fill: colors.launches })}
                         type="monotone"
                         yAxisId="left"
                     />

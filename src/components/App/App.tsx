@@ -22,6 +22,7 @@ import 'fonts/RobotoMono-Regular.woff';
 import Header from 'components/Header';
 import HomePage from 'components/HomePage';
 import NotFound from 'components/NotFound';
+import { BUILD_TYPE } from 'constants/appConstants';
 import { history, AppDispatch } from 'store';
 import { getAppTheme, getAppStoreVersion } from 'store/app/appSelectors';
 import { RootState } from 'store/types';
@@ -48,7 +49,10 @@ export class App extends Component<Props> {
 
     componentDidMount(): void {
         const { appStoreVersion, resetState } = this.props;
-        if (appStoreVersion !== packageJson.version) {
+        if (
+            appStoreVersion !== packageJson.version ||
+            BUILD_TYPE === 'development'
+        ) {
             resetState();
         }
     }

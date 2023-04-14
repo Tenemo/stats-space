@@ -7,11 +7,13 @@ import Chart from './Chart';
 
 import Error from 'components/Error';
 import { useSelector, useDispatch } from 'store';
+import { getAppIsUIDisplayed } from 'store/app/appSelectors';
 import { fetchLaunches, fetchGDP } from 'store/stats/statsActions';
 import { getStatsLaunches, getStatsGDP } from 'store/stats/statsSelectors';
 import './homePage.scss';
 
 export const HomePage = (): ReactElement => {
+    const isUIDisplayed = useSelector(getAppIsUIDisplayed);
     const dispatch = useDispatch();
     const {
         response: launchesResponse,
@@ -60,6 +62,9 @@ export const HomePage = (): ReactElement => {
                 }}
             >
                 {(() => {
+                    if (!isUIDisplayed) {
+                        return null;
+                    }
                     if (isLoading) {
                         return (
                             <Box
