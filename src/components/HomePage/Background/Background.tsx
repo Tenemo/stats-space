@@ -1,19 +1,25 @@
 import { Box } from '@mui/material';
-import React, { ReactElement, useCallback, memo } from 'react';
+import React, { ReactElement, useCallback, memo, useMemo } from 'react';
 import Particles from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
 import type { Engine } from 'tsparticles-engine';
 
-import { particlesOptions } from './particlesOptions';
+import { getParticlesOptions } from './particlesOptions';
 
 import { useSelector } from 'store';
-import { getAppTheme } from 'store/app/appSelectors';
+import { getAppTheme, getAppIsUIDisplayed } from 'store/app/appSelectors';
 
 export const Background = (): ReactElement => {
     const appTheme = useSelector(getAppTheme);
+    const isUIDisplayed = useSelector(getAppIsUIDisplayed);
     const particlesInit = useCallback(async (engine: Engine) => {
         await loadFull(engine);
     }, []);
+
+    const particlesOptions = useMemo(
+        () => getParticlesOptions(isUIDisplayed),
+        [isUIDisplayed],
+    );
 
     return (
         <Box

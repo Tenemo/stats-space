@@ -1,6 +1,8 @@
 import type { ISourceOptions } from 'tsparticles-engine';
 
-export const particlesOptions: ISourceOptions = {
+export const getParticlesOptions = (
+    isUIDisplayed: boolean,
+): ISourceOptions => ({
     background: {
         color: {
             value: `#000`,
@@ -17,10 +19,10 @@ export const particlesOptions: ISourceOptions = {
         },
         modes: {
             connect: {
-                distance: 120,
-                radius: 120,
+                distance: isUIDisplayed ? 120 : 140,
+                radius: isUIDisplayed ? 120 : 140,
                 links: {
-                    opacity: 0.1,
+                    opacity: isUIDisplayed ? 0.1 : 0.2,
                 },
             },
         },
@@ -64,4 +66,4 @@ export const particlesOptions: ISourceOptions = {
             value: { min: 1, max: 3 },
         },
     },
-};
+});
