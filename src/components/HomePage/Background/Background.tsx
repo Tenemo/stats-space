@@ -23,7 +23,7 @@ export const Background = (): ReactElement => {
         >
             <Box
                 sx={{
-                    zIndex: 0,
+                    zIndex: 1,
                     position: 'absolute',
                     top: 0,
                     left: 0,
