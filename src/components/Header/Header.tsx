@@ -67,7 +67,7 @@ export const Header = (): ReactElement => {
                     onClick={onPClick}
                     sx={{
                         color: theme.palette.text.secondary,
-                        transition: 'color 1500ms linear',
+                        transition: 'color 2000ms linear',
                         textDecoration: 'none',
                     }}
                 >
