@@ -16,6 +16,7 @@ import { toggleTheme, toggleDisplayUI } from 'store/app/appActions';
 import { getAppTheme } from 'store/app/appSelectors';
 
 let clickCount = 0;
+let isToggleBlocked = false;
 
 export const Header = (): ReactElement => {
     const theme = useTheme();
@@ -27,12 +28,17 @@ export const Header = (): ReactElement => {
     };
 
     const onPClick = (): void => {
+        if (isToggleBlocked) return;
         clickCount += 1;
         setTimeout(() => {
             clickCount -= 1;
         }, 1000);
         if (clickCount === 5) {
             dispatch(toggleDisplayUI());
+            isToggleBlocked = true;
+            setTimeout(() => {
+                isToggleBlocked = false;
+            }, 2000);
         }
     };
 
