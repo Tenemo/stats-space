@@ -1,5 +1,6 @@
 import { Button, Box, Typography } from '@mui/material';
 import React, { ReactElement, memo, useMemo } from 'react';
+import { isMobile } from 'react-device-detect';
 import {
     ComposedChart,
     Bar,
@@ -128,7 +129,6 @@ const Chart = (): ReactElement => {
                 flexDirection: 'column',
                 width: '100%',
                 height: '100%',
-                m: 1,
             }}
         >
             <Typography>Total launches: {launchesCount}</Typography>
@@ -151,16 +151,18 @@ const Chart = (): ReactElement => {
                         stroke={colors.launches}
                         yAxisId="left"
                     >
-                        <Label
-                            angle={270}
-                            offset={-10}
-                            position="left"
-                            stroke={colors.launches}
-                            style={{
-                                textAnchor: 'middle',
-                            }}
-                            value="No. of launches"
-                        />
+                        {isMobile && (
+                            <Label
+                                angle={270}
+                                offset={-10}
+                                position="left"
+                                stroke={colors.launches}
+                                style={{
+                                    textAnchor: 'middle',
+                                }}
+                                value="No. of launches"
+                            />
+                        )}
                     </YAxis>
                     <YAxis
                         domain={
@@ -177,16 +179,18 @@ const Chart = (): ReactElement => {
                         width={90}
                         yAxisId="right"
                     >
-                        <Label
-                            angle={90}
-                            position="right"
-                            stroke={colors.gdp}
-                            style={{
-                                textAnchor: 'middle',
-                            }}
-                        >
-                            GDP [Billions USD]
-                        </Label>
+                        {isMobile && (
+                            <Label
+                                angle={90}
+                                position="right"
+                                stroke={colors.gdp}
+                                style={{
+                                    textAnchor: 'middle',
+                                }}
+                            >
+                                GDP [Billions USD]
+                            </Label>
+                        )}
                     </YAxis>
                     <Tooltip content={CustomTooltip} />
                     <Legend />

@@ -13,15 +13,20 @@ import YearRangeFilter from './YearRangeFilter';
 
 import { useSelector, useDispatch } from 'store';
 import { filterChart } from 'store/stats/statsActions';
-import { getStatsFilters, getStatsLaunches } from 'store/stats/statsSelectors';
+import {
+    getStatsFilters,
+    getStatsLaunches,
+    getStatsGDP,
+} from 'store/stats/statsSelectors';
 
 const ChartFilters = (): ReactElement => {
     const dispatch = useDispatch();
     const filters = useSelector(getStatsFilters);
     const { response: launchesResponse } = useSelector(getStatsLaunches);
+    const { response: GDPResponse } = useSelector(getStatsGDP);
 
     const topCountries = useMemo(() => {
-        if (!launchesResponse?.launches) {
+        if (!launchesResponse?.launches || !GDPResponse) {
             return [];
         }
 
@@ -48,11 +53,13 @@ const ChartFilters = (): ReactElement => {
                 };
             }, {} as Record<string, { count: number; countryName: string; countryCode: string }>);
 
-        const sortedCountries = Object.values(countryLaunchCounts).sort(
-            (a, b) => b.count - a.count,
+        let filteredCountries = Object.values(countryLaunchCounts).filter(
+            (country) => Object.keys(GDPResponse).includes(country.countryCode),
         );
-        return sortedCountries.slice(0, 20);
-    }, [launchesResponse]);
+
+        filteredCountries = filteredCountries.sort((a, b) => b.count - a.count);
+        return filteredCountries;
+    }, [GDPResponse, launchesResponse?.launches]);
 
     const onCountryChange = useCallback(
         (event: SelectChangeEvent<string>): void => {

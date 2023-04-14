@@ -46,6 +46,7 @@ export const HomePage = (): ReactElement => {
                 zIndex: 0,
                 width: '100%',
                 height: '100%',
+                minHeight: '500px',
             }}
         >
             <Background />
@@ -53,8 +54,6 @@ export const HomePage = (): ReactElement => {
                 sx={{
                     zIndex: 1,
                     borderRadius: '10px',
-                    transition: 'background-color 2000ms ease-in-out',
-                    mt: 2,
                     width: isMobile ? '100%' : '90%',
                     minHeight: isMobile ? undefined : '500px',
                     height: isMobile ? '100%' : '70%',
